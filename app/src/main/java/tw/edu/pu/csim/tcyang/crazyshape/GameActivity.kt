@@ -18,6 +18,8 @@ class GameActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_game)
 
+
+
         var Intent = getIntent()
         FlagShape = intent.getIntExtra("形狀",0)
         when(FlagShape){
@@ -31,9 +33,10 @@ class GameActivity : AppCompatActivity() {
         btnBack.setOnClickListener(object: View.OnClickListener{
             override fun onClick(p0: View?) {
                 finish()
+
             }
         })
-
+        btnBack.isEnabled = false
         btn.setOnClickListener(object:View.OnClickListener{
             override fun onClick(p0: View?) {
                 handv.path.reset()
@@ -90,8 +93,17 @@ class GameActivity : AppCompatActivity() {
             "triangle" -> {Result = "三角形"
                 FlagDraw=4}
         }
-        Result += ": " + String.format("%.1f%%", outputs[0].score * 100.0f)
+       // Result += ": " + String.format("%.1f%%", outputs[0].score * 100.0f)
+        Result = "您畫的是"+Result+","
+        if(FlagShape == FlagDraw){
+            Result+="恭喜順利過關!"
+            btnBack.isEnabled = true
+        }
+        else{
+            btnBack.isEnabled = false
+            Result+="請再試試看喔!"
 
+        }
 
         // Releases model resources if no longer used.
         model.close()
